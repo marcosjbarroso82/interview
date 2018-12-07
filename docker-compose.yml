@@ -1,0 +1,45 @@
+version: '3'
+services:
+  interview:
+    container_name: interview
+    image: "interview"
+    build: .
+    # network_mode: host
+    command: python manage.py runserver 0.0.0.0:80
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    expose:
+      - "80"
+      - "8000"
+    environment:
+      - DEBUG=True
+    env_file:
+      - .env
+  #
+  # nginx-proxy:
+  #   image: jwilder/nginx-proxy
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock:ro
+  #
+  # jupyter:
+  #     # image: jupyter/datascience-notebook
+  #     build:
+  #       context: .
+  #       dockerfile: Dockerfile-jupyter # create with snippet jupyter_dockerfile
+  #     volumes:
+  #       - .:/usr/src/app
+  #     working_dir: /usr/src/app
+  #     ports:
+  #       - 8888:8888
+  #       - 6006:6006
+  #     container_name: jupyter_notebook
+  #     command: "start-notebook.sh --allow-root \
+  #               --NotebookApp.password='' \
+  #               --NotebookApp.token='' \
+  #               --NotebookApp.disable_check_xsrf='True'"
+  #     # command: "start-notebook.sh --NotebookApp.password='' --NotebookApp.token=''"
+  #       # --NotebookApp.certfile=/etc/ssl/notebook/jupyter.pem"
